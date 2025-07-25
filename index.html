@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VintagePak Contracts | Classic Agreements & Invoices</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Playfair+Display:wght@700&family=Marcellus&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #8A704C;
+            --primary-dark: #6B5437;
+            --secondary: #4A6B5F;
+            --accent: #D4A017;
+            --light: #F8F4E9;
+            --dark: #3C2F2D;
+            --gray: #8C7B6B;
+            --light-gray: #E8E0D5;
+            --border: #C9B8A7;
+            --success: #5D8C7B;
+            --warning: #D4A017;
+            --danger: #A0522D;
+            --card-shadow: 0 4px 12px rgba(60, 47, 45, 0.15);
+            --radius: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23F8F4E9"/><path d="M0,50 Q25,40 50,50 T100,50 L100,100 L0,100 Z" fill="%23e8e0d5" opacity="0.1"/></svg>'), #F8F4E9;
+            color: var(--dark);
+            line-height: 1.8;
+            min-height: 100vh;
+            background-size: 100% auto;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="200" height="200" fill="none" stroke="%23D4A017" stroke-width="0.5" stroke-opacity="0.1" stroke-dasharray="4,4"/></svg>');
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        header {
+            background: rgba(139, 107, 70, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            border-bottom: 2px solid var(--accent);
+            box-shadow: 0 3px 10px rgba(60, 47, 45, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Marcellus', serif;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--accent);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--light);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 0 2px var(--primary-dark);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--light-gray);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            padding: 8px 0;
+            font-size: 1.15rem;
+            letter-spacing: 0.5px;
+            font-family: 'Marcellus', serif;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* Landing Page */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(138, 112, 76, 0.1) 0%, rgba(107, 84, 55, 0.1) 100%);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, rgba(212, 160, 23, 0.1) 0%, rgba(107, 84, 55, 0.1) 100%);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            line-height: 1.2;
+            font-weight: 700;
+            color: var(--dark);
+            font-family: 'Playfair Display', serif;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .hero h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .hero p {
+            font-size: 1.35rem;
+            color: var(--dark);
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 500;
+        }
+
+        .cta-container {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 16px 42px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1.15rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Marcellus', serif;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.1) 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--light);
+            box-shadow: 0 4px 15px rgba(138, 112, 76, 0.3);
+            border: 1px solid rgba(212, 160, 23, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(138, 112, 76, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--primary-dark);
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 10px rgba(60, 47, 45, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-gray);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(60, 47, 45, 0.15);
+            border-color: var(--primary);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin: 100px 0;
+        }
+
+        .feature-card {
+            background: rgba(248, 244, 233, 0.8);
+            border-radius: var(--radius);
+            padding: 40px 32px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(201, 184, 167, 0.5);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(60, 47, 45, 0.15);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(138, 112, 76, 0.1) 0%, rgba(107, 84, 55, 0.1) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            border: 2px solid var(--accent);
+        }
+
+        .feature-icon i {
+            font-size: 32px;
+            color: var(--primary-dark);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.7rem;
+            color: var(--dark);
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .feature-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .feature-card p {
+            color: var(--dark);
+            font-size: 1.15rem;
+            font-weight: 500;
+        }
+
+        /* Module Containers */
+        .module-container {
+            display: none;
+            padding: 80px 0;
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+            gap: 20px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        .module-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .module-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            display: inline-block;
+        }
+
+        .module-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .module-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 50px;
+        }
+
+        @media (min-width: 992px) {
+            .module-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .form-container, .preview-container {
+            background: rgba(248, 244, 233, 0.9);
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(201, 184, 167, 0.7);
+            position: relative;
+        }
+
+        .form-container {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+        }
+
+        .form-container::before, .preview-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1.1rem;
+            font-family: 'Marcellus', serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.5);
+            color: var(--dark);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(138, 112, 76, 0.2);
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 35px;
+        }
+
+        .action-btn {
+            padding: 14px 28px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            background: var(--light);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.05rem;
+            font-family: 'Marcellus', serif;
+            color: var(--dark);
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--light);
+            border: none;
+        }
+
+        .action-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(138, 112, 76, 0.3);
+        }
+
+        .action-btn:hover {
+            background: var(--light-gray);
+            transform: translateY(-3px);
+            border-color: var(--primary);
+        }
+
+        /* Contract Preview */
+        .contract-preview {
+            font-family: 'Cormorant Garamond', serif;
+            line-height: 1.8;
+            padding: 40px;
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            position: relative;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%23D4A017" stroke-width="0.3" stroke-opacity="0.1" stroke-dasharray="2,2"/></svg>');
+            background-size: 100px 100px;
+        }
+
+        .contract-preview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .contract-preview h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+            color: var(--primary-dark);
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .contract-preview h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .contract-preview h2 {
+            font-size: 1.5rem;
+            margin: 35px 0 20px;
+            color: var(--primary-dark);
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--light-gray);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .contract-preview p {
+            margin-bottom: 20px;
+            font-size: 1.15rem;
+        }
+
+        .contract-signature {
+            margin-top: 70px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contract-signature div {
+            position: relative;
+            padding-top: 40px;
+        }
+
+        .contract-signature div::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .contract-disclaimer {
+            margin-top: 50px;
+            padding: 20px;
+            background: rgba(160, 82, 45, 0.05);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--danger);
+            font-size: 1rem;
+        }
+
+        /* Invoice Preview */
+        .invoice-preview {
+            font-family: 'Cormorant Garamond', serif;
+            padding: 40px;
+            background: var(--light);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--card-shadow);
+            position: relative;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%23D4A017" stroke-width="0.3" stroke-opacity="0.1" stroke-dasharray="2,2"/></svg>');
+            background-size: 100px 100px;
+        }
+
+        .invoice-preview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .invoice-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            position: relative;
+            display: inline-block;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .invoice-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .invoice-meta {
+            text-align: right;
+        }
+
+        .invoice-meta p {
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .invoice-addresses {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .invoice-address {
+            background: rgba(232, 224, 213, 0.5);
+            padding: 25px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(201, 184, 167, 0.5);
+        }
+
+        .invoice-address h3 {
+            margin-bottom: 18px;
+            font-size: 1.3rem;
+            color: var(--primary-dark);
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .invoice-address h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 40px 0;
+            font-size: 1.1rem;
+        }
+
+        .invoice-table th {
+            text-align: left;
+            padding: 16px;
+            background: rgba(232, 224, 213, 0.5);
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            font-family: 'Marcellus', serif;
+        }
+
+        .invoice-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .invoice-total {
+            text-align: right;
+            margin: 50px 0;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .invoice-payment {
+            background: rgba(232, 224, 213, 0.5);
+            padding: 35px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(201, 184, 167, 0.5);
+        }
+
+        .invoice-payment h3 {
+            margin-bottom: 18px;
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .invoice-payment h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: var(--light-gray);
+            padding: 80px 0 40px;
+            margin-top: 100px;
+            position: relative;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%23D4A017" stroke-width="0.3" stroke-opacity="0.1" stroke-dasharray="2,2"/></svg>');
+            background-size: 100px 100px;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 60px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 18px;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            color: var(--light);
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 18px;
+        }
+
+        .footer-links a {
+            color: #C9B8A7;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 60px;
+            color: #C9B8A7;
+            font-size: 1.1rem;
+            margin-top: 40px;
+            position: relative;
+        }
+
+        .copyright::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: rgba(201, 184, 167, 0.3);
+        }
+
+        .creator {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.15rem;
+            color: #C9B8A7;
+        }
+
+        .creator a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            font-family: 'Marcellus', serif;
+        }
+
+        .creator a:hover {
+            color: var(--light);
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 80px 0 50px;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .cta-container {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .contract-signature, .invoice-addresses {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .invoice-header {
+                flex-direction: column;
+                gap: 25px;
+            }
+            
+            .invoice-meta {
+                text-align: left;
+            }
+            
+            .module-title {
+                font-size: 2rem;
+            }
+            
+            .footer-container {
+                gap: 40px;
+            }
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--light);
+            color: var(--dark);
+            padding: 20px 28px;
+            border-radius: var(--radius);
+            box-shadow: 0 10px 30px rgba(60, 47, 45, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            border-left: 4px solid var(--success);
+            font-family: 'Marcellus', serif;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast i {
+            font-size: 1.6rem;
+            color: var(--success);
+        }
+
+        /* Currency Toggle */
+        .currency-toggle {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .currency-toggle span {
+            font-weight: 600;
+            color: var(--dark);
+            font-family: 'Marcellus', serif;
+        }
+
+        .currency-btn {
+            padding: 8px 18px;
+            border-radius: 30px;
+            background: var(--light-gray);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+        }
+
+        .currency-btn.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--light);
+            border-color: var(--primary-dark);
+        }
+
+        .save-toggle {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 25px;
+            padding: 15px 0;
+        }
+        
+        .save-toggle input {
+            width: auto;
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 80px 0;
+        }
+        
+        .vintage-border {
+            position: absolute;
+            width: 100%;
+            height: 15px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="15" viewBox="0 0 40 15"><path d="M0,0 Q20,15 40,0" fill="none" stroke="%238A704C" stroke-width="1"/></svg>');
+            background-repeat: repeat-x;
+            bottom: -7px;
+            left: 0;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">VI</div>
+                Vintage<span>Pak</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active" data-section="home">Home</a></li>
+                    <li><a href="#" data-section="contract">Contract</a></li>
+                    <li><a href="#" data-section="invoice">Invoice</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Landing Page -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h1>Classic Contracts & Invoices</h1>
+                <p>Create timeless agreements with the elegance of 60s-70s Pakistan. Professional templates designed for freelancers with a touch of vintage charm.</p>
+                <div class="cta-container">
+                    <button class="btn btn-primary" data-section="contract">
+                        <i class="fas fa-file-contract"></i>
+                        Create Contract
+                    </button>
+                    <button class="btn btn-secondary" data-section="invoice">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        Generate Invoice
+                    </button>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h3>Heritage Agreements</h3>
+                    <p>Professionally crafted contracts with the timeless elegance of Pakistani legal traditions from the golden era.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-invoice"></i>
+                    </div>
+                    <h3>Classic Invoicing</h3>
+                    <p>Create invoices with vintage charm that maintain professionalism while honoring traditional aesthetics.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Timeless Security</h3>
+                    <p>Your information remains private with our locally processed, vintage-inspired security approach.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contract Generator Module -->
+        <section id="contract" class="section module-container">
+            <div class="module-header">
+                <h2 class="module-title">Vintage Contract Generator</h2>
+                <button class="btn btn-secondary back-to-home">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Home
+                </button>
+            </div>
+
+            <div class="module-content">
+                <div class="form-container">
+                    <h3>Contract Details</h3>
+                    <form id="contract-form">
+                        <div class="currency-toggle">
+                            <span>Currency:</span>
+                            <button type="button" class="currency-btn active" data-currency="PKR">PKR</button>
+                            <button type="button" class="currency-btn" data-currency="USD">USD</button>
+                            <button type="button" class="currency-btn" data-currency="EUR">EUR</button>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="freelancer-name"><i class="fas fa-user"></i> Freelancer Full Name</label>
+                            <input type="text" id="freelancer-name" placeholder="e.g. Ali Ahmed" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="client-name"><i class="fas fa-building"></i> Client Full Name</label>
+                            <input type="text" id="client-name" placeholder="e.g. ABC Company" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="project-title"><i class="fas fa-tasks"></i> Project Title</label>
+                            <input type="text" id="project-title" placeholder="e.g. Website Development" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="project-desc"><i class="fas fa-file-alt"></i> Project Description</label>
+                            <textarea id="project-desc" placeholder="Describe the project scope and deliverables..." required></textarea>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="form-group">
+                                <label for="start-date"><i class="fas fa-calendar-alt"></i> Start Date</label>
+                                <input type="date" id="start-date" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="end-date"><i class="fas fa-calendar-alt"></i> End Date</label>
+                                <input type="date" id="end-date" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="payment-type"><i class="fas fa-money-bill-wave"></i> Payment Type</label>
+                            <select id="payment-type" required>
+                                <option value="">Select payment type</option>
+                                <option value="hourly">Hourly Rate</option>
+                                <option value="fixed">Fixed Price</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="form-group">
+                                <label for="rate"><i class="fas fa-coins"></i> Rate</label>
+                                <input type="number" id="rate" placeholder="e.g. 5000" required>
+                            </div>
+                            
+                            <div class="form-group" id="hours-group" style="display: none;">
+                                <label for="hours"><i class="fas fa-clock"></i> Total Hours</label>
+                                <input type="number" id="hours" placeholder="e.g. 40">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="payment-terms"><i class="fas fa-file-invoice"></i> Payment Terms</label>
+                            <textarea id="payment-terms">50% advance payment before work begins, 50% upon completion and delivery of all project assets. Late payments incur 1.5% monthly interest.</textarea>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="form-group">
+                                <label for="freelancer-signature"><i class="fas fa-signature"></i> Freelancer Signature</label>
+                                <input type="text" id="freelancer-signature" placeholder="Full name for signature">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="client-signature"><i class="fas fa-signature"></i> Client Signature</label>
+                                <input type="text" id="client-signature" placeholder="Full name for signature">
+                            </div>
+                        </div>
+                        
+                        <div class="save-toggle">
+                            <input type="checkbox" id="save-contract" checked>
+                            <label for="save-contract">Save my information for next time</label>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="preview-container">
+                    <h3>Contract Preview</h3>
+                    <div class="contract-preview" id="contract-preview">
+                        <h1>Freelance Service Agreement</h1>
+                        
+                        <p><strong>This Agreement</strong> is made effective from <span id="preview-start-date">[Start Date]</span> between:</p>
+                        
+                        <p><strong>[Freelancer Name]</strong> ("Freelancer"), a sole proprietor operating under the laws of Pakistan</p>
+                        <p>and</p>
+                        <p><strong>[Client Name]</strong> ("Client")</p>
+                        
+                        <h2>1. Project Description</h2>
+                        <p id="preview-project-desc">[Project description will appear here]</p>
+                        
+                        <h2>2. Project Duration</h2>
+                        <p>This agreement shall commence on <span id="preview-start-date2">[Start Date]</span> and shall continue until <span id="preview-end-date">[End Date]</span> unless terminated earlier as per Clause 6.</p>
+                        
+                        <h2>3. Compensation</h2>
+                        <p id="preview-payment-details">[Payment details will appear here]</p>
+                        
+                        <h2>4. Payment Terms</h2>
+                        <p id="preview-payment-terms">[Payment terms will appear here]</p>
+                        
+                        <h2>5. Intellectual Property</h2>
+                        <p>All work product created by Freelancer for Client shall be the sole and exclusive property of Client upon full payment. Until payment is received in full, Freelancer retains ownership.</p>
+                        
+                        <h2>6. Termination</h2>
+                        <p>Either party may terminate this agreement with 14 days written notice. Upon termination, Client shall pay Freelancer for all services rendered up to the termination date.</p>
+                        
+                        <h2>7. Confidentiality</h2>
+                        <p>Freelancer agrees not to disclose any confidential information received from Client to any third party during or after the term of this agreement.</p>
+                        
+                        <h2>8. Governing Law</h2>
+                        <p>This agreement shall be governed by and construed in accordance with the laws of Pakistan. Any disputes shall be subject to the exclusive jurisdiction of the courts of Pakistan.</p>
+                        
+                        <div class="contract-signature">
+                            <div>
+                                <p>_________________________</p>
+                                <p id="preview-freelancer-signature">[Freelancer Name]</p>
+                                <p>Freelancer</p>
+                                <p>Date: _______________</p>
+                            </div>
+                            
+                            <div>
+                                <p>_________________________</p>
+                                <p id="preview-client-signature">[Client Name]</p>
+                                <p>Client</p>
+                                <p>Date: _______________</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contract-disclaimer">
+                            <p><strong>Disclaimer:</strong> This contract is provided as a template for informational purposes only and does not constitute legal advice. While designed to comply with Pakistani laws, it may not cover all specific circumstances. Parties are advised to consult with a qualified legal professional before signing any legally binding agreement.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn primary" id="copy-contract">
+                            <i class="fas fa-copy"></i>
+                            Copy to Clipboard
+                        </button>
+                        <button class="action-btn" id="print-contract">
+                            <i class="fas fa-print"></i>
+                            Print
+                        </button>
+                        <button class="action-btn" id="pdf-contract">
+                            <i class="fas fa-file-pdf"></i>
+                            Save as PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Invoice Generator Module -->
+        <section id="invoice" class="section module-container">
+            <div class="module-header">
+                <h2 class="module-title">Classic Invoice Generator</h2>
+                <button class="btn btn-secondary back-to-home">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Home
+                </button>
+            </div>
+
+            <div class="module-content">
+                <div class="form-container">
+                    <h3>Invoice Details</h3>
+                    <form id="invoice-form">
+                        <div class="currency-toggle">
+                            <span>Currency:</span>
+                            <button type="button" class="currency-btn active" data-currency="PKR">PKR</button>
+                            <button type="button" class="currency-btn" data-currency="USD">USD</button>
+                            <button type="button" class="currency-btn" data-currency="EUR">EUR</button>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="your-name"><i class="fas fa-user"></i> Your Name / Business Name</label>
+                            <input type="text" id="your-name" placeholder="e.g. Ali Ahmed" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="invoice-client"><i class="fas fa-building"></i> Client Name</label>
+                            <input type="text" id="invoice-client" placeholder="e.g. ABC Company" required>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="form-group">
+                                <label for="invoice-number"><i class="fas fa-hashtag"></i> Invoice Number</label>
+                                <input type="text" id="invoice-number" placeholder="e.g. INV-001" value="INV-001" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="invoice-date"><i class="fas fa-calendar"></i> Issue Date</label>
+                                <input type="date" id="invoice-date" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="due-date"><i class="fas fa-clock"></i> Due Date</label>
+                            <input type="date" id="due-date" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service-desc"><i class="fas fa-tasks"></i> Description of Service</label>
+                            <textarea id="service-desc" placeholder="Describe the services provided..." required>Website development services as per contract</textarea>
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="form-group">
+                                <label for="rate"><i class="fas fa-coins"></i> Rate</label>
+                                <input type="number" id="invoice-rate" placeholder="e.g. 5000" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="quantity"><i class="fas fa-calculator"></i> Quantity (hours or units)</label>
+                                <input type="number" id="quantity" placeholder="e.g. 10" value="1" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="payment-details"><i class="fas fa-university"></i> Payment Details</label>
+                            <textarea id="payment-details">Bank Name: Meezan Bank
+Account Title: Ali Ahmed
+Account Number: 1234-5678901234
+IBAN: PK36MEZN0001234567890123
+
+For JazzCash/Easypaisa:
+0312-3456789 (Ali Ahmed)</textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="logo-upload"><i class="fas fa-image"></i> Add Logo (optional)</label>
+                            <input type="file" id="logo-upload" accept="image/*">
+                        </div>
+                        
+                        <div class="save-toggle">
+                            <input type="checkbox" id="save-invoice" checked>
+                            <label for="save-invoice">Save my information for next time</label>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="preview-container">
+                    <h3>Invoice Preview</h3>
+                    <div class="invoice-preview" id="invoice-preview">
+                        <div class="invoice-header">
+                            <div>
+                                <h1 class="invoice-title">INVOICE</h1>
+                                <div id="invoice-logo"></div>
+                            </div>
+                            <div class="invoice-meta">
+                                <p><strong>Invoice #:</strong> <span id="preview-invoice-number">INV-001</span></p>
+                                <p><strong>Date:</strong> <span id="preview-invoice-date">[Date]</span></p>
+                                <p><strong>Due Date:</strong> <span id="preview-due-date">[Due Date]</span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="invoice-addresses">
+                            <div class="invoice-address">
+                                <h3>From:</h3>
+                                <p id="preview-your-name">[Your Name]</p>
+                                <p>Freelance Professional</p>
+                                <p>Karachi, Pakistan</p>
+                            </div>
+                            
+                            <div class="invoice-address">
+                                <h3>To:</h3>
+                                <p id="preview-invoice-client">[Client Name]</p>
+                                <p>[Client Company]</p>
+                                <p>[Client Address]</p>
+                            </div>
+                        </div>
+                        
+                        <table class="invoice-table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Rate</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td id="preview-service-desc">[Service Description]</td>
+                                    <td id="preview-quantity">1</td>
+                                    <td id="preview-invoice-rate">0.00 PKR</td>
+                                    <td id="preview-total">0.00 PKR</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <div class="invoice-total">
+                            <p>Total Amount Due: <strong id="preview-total-amount">0.00 PKR</strong></p>
+                        </div>
+                        
+                        <div class="invoice-payment">
+                            <h3>Payment Information</h3>
+                            <p id="preview-payment-info">[Payment details will appear here]</p>
+                        </div>
+                        
+                        <div class="contract-disclaimer" style="margin-top: 30px;">
+                            <p><strong>Note:</strong> Payment is due within 15 days of invoice date. Late payments will incur a monthly interest charge of 1.5% on the outstanding balance.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn primary" id="download-invoice">
+                            <i class="fas fa-download"></i>
+                            Download PDF
+                        </button>
+                        <button class="action-btn" id="print-invoice">
+                            <i class="fas fa-print"></i>
+                            Print
+                        </button>
+                        <button class="action-btn" id="copy-invoice">
+                            <i class="fas fa-copy"></i>
+                            Copy Invoice Text
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-section">
+                <h3>VintagePak Contracts</h3>
+                <p>Preserving the elegance of Pakistani heritage through timeless contract and invoice solutions for modern professionals.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-file-contract"></i> Heritage Templates</a></li>
+                    <li><a href="#"><i class="fas fa-file-invoice"></i> Vintage Invoices</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> Legal Heritage Guide</a></li>
+                    <li><a href="#"><i class="fas fa-calculator"></i> Classic Calculator</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-gavel"></i> Terms of Service</a></li>
+                    <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                    <li><a href="#"><i class="fas fa-exclamation-circle"></i> Disclaimer</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="copyright">
+                &copy; 2023 VintagePak Contracts. Celebrating Pakistani heritage since 2023.
+            </div>
+            <div class="creator">
+                Crafted with <i class="fas fa-heart" style="color: var(--accent);"></i> by <a href="#" target="_blank">Heritage Design Studio</a>
+            </div>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Success! Your action was completed.</span>
+    </div>
+
+    <script>
+        // Navigation and Section Switching
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show home section by default
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById('home').style.display = 'block';
+            
+            // Navigation
+            document.querySelectorAll('nav a, .btn[data-section], .back-to-home').forEach(element => {
+                element.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const sectionId = this.getAttribute('data-section') || 'home';
+                    
+                    // Hide all sections
+                    document.querySelectorAll('.section').forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    
+                    // Show selected section
+                    document.getElementById(sectionId).style.display = 'block';
+                    
+                    // Update active nav link
+                    document.querySelectorAll('nav a').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    
+                    if (sectionId !== 'home') {
+                        document.querySelector(`nav a[data-section="${sectionId}"]`).classList.add('active');
+                    }
+                });
+            });
+            
+            // Set today's date as default for date fields
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('start-date').value = today;
+            document.getElementById('end-date').value = today;
+            document.getElementById('invoice-date').value = today;
+            
+            // Set due date to 7 days from now
+            const dueDate = new Date();
+            dueDate.setDate(dueDate.getDate() + 7);
+            document.getElementById('due-date').value = dueDate.toISOString().split('T')[0];
+            
+            // Show/hide hours field based on payment type
+            document.getElementById('payment-type').addEventListener('change', function() {
+                const hoursGroup = document.getElementById('hours-group');
+                hoursGroup.style.display = this.value === 'hourly' ? 'block' : 'none';
+                updateContractPreview();
+            });
+            
+            // Contract form inputs event listeners
+            const contractInputs = document.querySelectorAll('#contract-form input, #contract-form select, #contract-form textarea');
+            contractInputs.forEach(input => {
+                input.addEventListener('input', updateContractPreview);
+            });
+            
+            // Invoice form inputs event listeners
+            const invoiceInputs = document.querySelectorAll('#invoice-form input, #invoice-form textarea');
+            invoiceInputs.forEach(input => {
+                input.addEventListener('input', updateInvoicePreview);
+            });
+            
+            // Set up initial previews
+            updateContractPreview();
+            updateInvoicePreview();
+            
+            // Contract actions
+            document.getElementById('copy-contract').addEventListener('click', copyContract);
+            document.getElementById('print-contract').addEventListener('click', printContract);
+            document.getElementById('pdf-contract').addEventListener('click', generateContractPDF);
+            
+            // Invoice actions
+            document.getElementById('download-invoice').addEventListener('click', generateInvoicePDF);
+            document.getElementById('print-invoice').addEventListener('click', printInvoice);
+            document.getElementById('copy-invoice').addEventListener('click', copyInvoice);
+            
+            // Logo upload
+            document.getElementById('logo-upload').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const img = document.createElement('img');
+                        img.src = event.target.result;
+                        img.style.maxHeight = '80px';
+                        img.style.marginBottom = '15px';
+                        img.style.border = '1px solid var(--border)';
+                        img.style.padding = '5px';
+                        img.style.background = 'white';
+                        document.getElementById('invoice-logo').innerHTML = '';
+                        document.getElementById('invoice-logo').appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Currency toggle
+            document.querySelectorAll('.currency-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    this.parentElement.querySelectorAll('.currency-btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Update previews
+                    updateContractPreview();
+                    updateInvoicePreview();
+                });
+            });
+            
+            // Load saved data if available
+            loadSavedData();
+        });
+        
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Get active currency
+        function getActiveCurrency() {
+            return document.querySelector('.currency-btn.active').dataset.currency;
+        }
+        
+        // Format currency
+        function formatCurrency(amount) {
+            const currency = getActiveCurrency();
+            const symbol = currency === 'USD' ? '$' : currency === 'EUR' ? '€' : 'PKR ';
+            return symbol + parseFloat(amount).toLocaleString('en-PK');
+        }
+        
+        // Update contract preview
+        function updateContractPreview() {
+            const freelancerName = document.getElementById('freelancer-name').value || '[Freelancer Name]';
+            const clientName = document.getElementById('client-name').value || '[Client Name]';
+            const projectDesc = document.getElementById('project-desc').value || '[Project description will appear here]';
+            const startDate = document.getElementById('start-date').value || '[Start Date]';
+            const endDate = document.getElementById('end-date').value || '[End Date]';
+            const paymentType = document.getElementById('payment-type').value;
+            const rate = document.getElementById('rate').value || '0';
+            const hours = document.getElementById('hours').value || '0';
+            const paymentTerms = document.getElementById('payment-terms').value || '[Payment terms will appear here]';
+            const freelancerSignature = document.getElementById('freelancer-signature').value || '[Freelancer Name]';
+            const clientSignature = document.getElementById('client-signature').value || '[Client Name]';
+            
+            // Format dates
+            const formattedStartDate = startDate !== '[Start Date]' ? new Date(startDate).toLocaleDateString('en-PK') : startDate;
+            const formattedEndDate = endDate !== '[End Date]' ? new Date(endDate).toLocaleDateString('en-PK') : endDate;
+            
+            // Update payment details
+            let paymentDetails = '';
+            if (paymentType === 'hourly') {
+                const total = parseFloat(rate) * parseFloat(hours) || 0;
+                paymentDetails = `Hourly rate of ${formatCurrency(rate)} per hour for ${hours} hours. Total amount: ${formatCurrency(total)}`;
+            } else if (paymentType === 'fixed') {
+                paymentDetails = `Fixed price of ${formatCurrency(rate)} for the entire project`;
+            } else {
+                paymentDetails = '[Payment details will appear here]';
+            }
+            
+            // Update preview
+            document.getElementById('preview-freelancer-signature').textContent = freelancerSignature;
+            document.getElementById('preview-client-signature').textContent = clientSignature;
+            document.getElementById('preview-start-date').textContent = formattedStartDate;
+            document.getElementById('preview-start-date2').textContent = formattedStartDate;
+            document.getElementById('preview-end-date').textContent = formattedEndDate;
+            document.getElementById('preview-project-desc').textContent = projectDesc;
+            document.getElementById('preview-payment-details').textContent = paymentDetails;
+            document.getElementById('preview-payment-terms').textContent = paymentTerms;
+            
+            // Save data if checkbox is checked
+            if (document.getElementById('save-contract').checked) {
+                saveContractData();
+            }
+        }
+        
+        // Update invoice preview
+        function updateInvoicePreview() {
+            const yourName = document.getElementById('your-name').value || '[Your Name]';
+            const clientName = document.getElementById('invoice-client').value || '[Client Name]';
+            const invoiceNumber = document.getElementById('invoice-number').value || 'INV-001';
+            const invoiceDate = document.getElementById('invoice-date').value || '[Date]';
+            const dueDate = document.getElementById('due-date').value || '[Due Date]';
+            const serviceDesc = document.getElementById('service-desc').value || '[Service Description]';
+            const rate = parseFloat(document.getElementById('invoice-rate').value) || 0;
+            const quantity = parseFloat(document.getElementById('quantity').value) || 0;
+            const paymentDetails = document.getElementById('payment-details').value || '[Payment details will appear here]';
+            const total = rate * quantity;
+            
+            // Format dates
+            const formattedInvoiceDate = invoiceDate !== '[Date]' ? new Date(invoiceDate).toLocaleDateString('en-PK') : invoiceDate;
+            const formattedDueDate = dueDate !== '[Due Date]' ? new Date(dueDate).toLocaleDateString('en-PK') : dueDate;
+            
+            // Update preview
+            document.getElementById('preview-your-name').textContent = yourName;
+            document.getElementById('preview-invoice-client').textContent = clientName;
+            document.getElementById('preview-invoice-number').textContent = invoiceNumber;
+            document.getElementById('preview-invoice-date').textContent = formattedInvoiceDate;
+            document.getElementById('preview-due-date').textContent = formattedDueDate;
+            document.getElementById('preview-service-desc').textContent = serviceDesc;
+            document.getElementById('preview-quantity').textContent = quantity;
+            document.getElementById('preview-invoice-rate').textContent = formatCurrency(rate);
+            document.getElementById('preview-total').textContent = formatCurrency(total);
+            document.getElementById('preview-total-amount').textContent = formatCurrency(total);
+            document.getElementById('preview-payment-info').innerHTML = paymentDetails.replace(/\n/g, '<br>');
+            
+            // Save data if checkbox is checked
+            if (document.getElementById('save-invoice').checked) {
+                saveInvoiceData();
+            }
+        }
+        
+        // Save contract data to localStorage
+        function saveContractData() {
+            const contractData = {
+                freelancerName: document.getElementById('freelancer-name').value,
+                clientName: document.getElementById('client-name').value,
+                projectTitle: document.getElementById('project-title').value,
+                projectDesc: document.getElementById('project-desc').value,
+                startDate: document.getElementById('start-date').value,
+                endDate: document.getElementById('end-date').value,
+                paymentType: document.getElementById('payment-type').value,
+                rate: document.getElementById('rate').value,
+                hours: document.getElementById('hours').value,
+                paymentTerms: document.getElementById('payment-terms').value,
+                freelancerSignature: document.getElementById('freelancer-signature').value,
+                clientSignature: document.getElementById('client-signature').value
+            };
+            
+            localStorage.setItem('contractData', JSON.stringify(contractData));
+        }
+        
+        // Save invoice data to localStorage
+        function saveInvoiceData() {
+            const invoiceData = {
+                yourName: document.getElementById('your-name').value,
+                clientName: document.getElementById('invoice-client').value,
+                invoiceNumber: document.getElementById('invoice-number').value,
+                invoiceDate: document.getElementById('invoice-date').value,
+                dueDate: document.getElementById('due-date').value,
+                serviceDesc: document.getElementById('service-desc').value,
+                rate: document.getElementById('invoice-rate').value,
+                quantity: document.getElementById('quantity').value,
+                paymentDetails: document.getElementById('payment-details').value
+            };
+            
+            localStorage.setItem('invoiceData', JSON.stringify(invoiceData));
+        }
+        
+        // Load saved data from localStorage
+        function loadSavedData() {
+            // Load contract data
+            const contractData = JSON.parse(localStorage.getItem('contractData'));
+            if (contractData) {
+                document.getElementById('freelancer-name').value = contractData.freelancerName || '';
+                document.getElementById('client-name').value = contractData.clientName || '';
+                document.getElementById('project-title').value = contractData.projectTitle || '';
+                document.getElementById('project-desc').value = contractData.projectDesc || '';
+                document.getElementById('start-date').value = contractData.startDate || new Date().toISOString().split('T')[0];
+                document.getElementById('end-date').value = contractData.endDate || new Date().toISOString().split('T')[0];
+                document.getElementById('payment-type').value = contractData.paymentType || '';
+                document.getElementById('rate').value = contractData.rate || '';
+                document.getElementById('hours').value = contractData.hours || '';
+                document.getElementById('payment-terms').value = contractData.paymentTerms || '';
+                document.getElementById('freelancer-signature').value = contractData.freelancerSignature || '';
+                document.getElementById('client-signature').value = contractData.clientSignature || '';
+                
+                // Show hours if hourly payment
+                if (contractData.paymentType === 'hourly') {
+                    document.getElementById('hours-group').style.display = 'block';
+                }
+                
+                updateContractPreview();
+            }
+            
+            // Load invoice data
+            const invoiceData = JSON.parse(localStorage.getItem('invoiceData'));
+            if (invoiceData) {
+                document.getElementById('your-name').value = invoiceData.yourName || '';
+                document.getElementById('invoice-client').value = invoiceData.clientName || '';
+                document.getElementById('invoice-number').value = invoiceData.invoiceNumber || 'INV-001';
+                document.getElementById('invoice-date').value = invoiceData.invoiceDate || new Date().toISOString().split('T')[0];
+                document.getElementById('due-date').value = invoiceData.dueDate || new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+                document.getElementById('service-desc').value = invoiceData.serviceDesc || '';
+                document.getElementById('invoice-rate').value = invoiceData.rate || '';
+                document.getElementById('quantity').value = invoiceData.quantity || '1';
+                document.getElementById('payment-details').value = invoiceData.paymentDetails || '';
+                
+                updateInvoicePreview();
+            }
+        }
+        
+        // Contract actions
+        function copyContract() {
+            const contractText = document.getElementById('contract-preview').innerText;
+            navigator.clipboard.writeText(contractText).then(() => {
+                showToast('Contract copied to clipboard!');
+            });
+        }
+        
+        function printContract() {
+            window.print();
+        }
+        
+        function generateContractPDF() {
+            const element = document.getElementById('contract-preview');
+            const originalWidth = element.style.width;
+            const originalHeight = element.style.height;
+            
+            // Temporarily set to A4 dimensions
+            element.style.width = '794px';
+            element.style.height = '1123px';
+            
+            html2canvas(element, {
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                allowTaint: false
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jspdf.jsPDF('p', 'pt', 'a4');
+                const imgProps = pdf.getImageProperties(imgData);
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                pdf.save('vintage-contract.pdf');
+                
+                // Restore original dimensions
+                element.style.width = originalWidth;
+                element.style.height = originalHeight;
+                
+                showToast('Contract PDF downloaded!');
+            });
+        }
+        
+        // Invoice actions
+        function generateInvoicePDF() {
+            const element = document.getElementById('invoice-preview');
+            const originalWidth = element.style.width;
+            const originalHeight = element.style.height;
+            
+            // Temporarily set to A4 dimensions
+            element.style.width = '794px';
+            element.style.height = '1123px';
+            
+            html2canvas(element, {
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                allowTaint: false
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jspdf.jsPDF('p', 'pt', 'a4');
+                const imgProps = pdf.getImageProperties(imgData);
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                pdf.save('vintage-invoice.pdf');
+                
+                // Restore original dimensions
+                element.style.width = originalWidth;
+                element.style.height = originalHeight;
+                
+                showToast('Invoice PDF downloaded!');
+            });
+        }
+        
+        function printInvoice() {
+            window.print();
+        }
+        
+        function copyInvoice() {
+            const invoiceText = document.getElementById('invoice-preview').innerText;
+            navigator.clipboard.writeText(invoiceText).then(() => {
+                showToast('Invoice text copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+</html>
