@@ -1041,6 +1041,57 @@
             margin: 20px 0;
             font-size: 0.95rem;
         }
+        
+        /* Invoice Items */
+        .invoice-item {
+            background: rgba(232, 224, 213, 0.3);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .remove-item {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .template-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .template-btn {
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            background: var(--light-gray);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .template-btn:hover {
+            background: var(--primary);
+            color: var(--light);
+        }
     </style>
 </head>
 <body>
@@ -1137,8 +1188,18 @@
                         </div>
                         
                         <div class="form-group">
+                            <label for="freelancer-address"><i class="fas fa-map-marker-alt"></i> Freelancer Address</label>
+                            <textarea id="freelancer-address" placeholder="Your full address..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
                             <label for="client-name"><i class="fas fa-building"></i> Client Full Name</label>
                             <input type="text" id="client-name" placeholder="e.g. ABC Company" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="client-address"><i class="fas fa-map-marker-alt"></i> Client Address</label>
+                            <textarea id="client-address" placeholder="Client's full address..."></textarea>
                         </div>
                         
                         <div class="form-group">
@@ -1205,6 +1266,15 @@
                             <input type="checkbox" id="save-contract" checked>
                             <label for="save-contract">Save my information for next time</label>
                         </div>
+                        
+                        <div class="template-actions">
+                            <button type="button" class="template-btn" id="export-contract-json">
+                                <i class="fas fa-file-export"></i> Export as JSON
+                            </button>
+                            <button type="button" class="template-btn" id="import-contract-json">
+                                <i class="fas fa-file-import"></i> Import JSON
+                            </button>
+                        </div>
                     </form>
                 </div>
                 
@@ -1215,9 +1285,13 @@
                         
                         <p><strong>This Agreement</strong> is made effective from <span id="preview-start-date">[Start Date]</span> between:</p>
                         
-                        <p><strong>[Freelancer Name]</strong> ("Freelancer"), a sole proprietor operating under the laws of Pakistan</p>
+                        <p><strong id="preview-freelancer-name">[Freelancer Name]</strong> ("Freelancer")<br>
+                        <span id="preview-freelancer-address">[Freelancer Address]</span></p>
+                        
                         <p>and</p>
-                        <p><strong>[Client Name]</strong> ("Client")</p>
+                        
+                        <p><strong id="preview-client-name">[Client Name]</strong> ("Client")<br>
+                        <span id="preview-client-address">[Client Address]</span></p>
                         
                         <h2>1. Project Description</h2>
                         <p id="preview-project-desc">[Project description will appear here]</p>
@@ -1312,8 +1386,18 @@
                         </div>
                         
                         <div class="form-group">
+                            <label for="your-address"><i class="fas fa-map-marker-alt"></i> Your Address</label>
+                            <textarea id="your-address" placeholder="Your full address..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
                             <label for="invoice-client"><i class="fas fa-building"></i> Client Name</label>
                             <input type="text" id="invoice-client" placeholder="e.g. ABC Company" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="client-address-invoice"><i class="fas fa-map-marker-alt"></i> Client Address</label>
+                            <textarea id="client-address-invoice" placeholder="Client's full address..."></textarea>
                         </div>
                         
                         <div class="input-row">
@@ -1334,20 +1418,29 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="service-desc"><i class="fas fa-tasks"></i> Description of Service</label>
-                            <textarea id="service-desc" placeholder="Describe the services provided..." required>Website development services as per contract</textarea>
-                        </div>
-                        
-                        <div class="input-row">
-                            <div class="form-group">
-                                <label for="rate"><i class="fas fa-coins"></i> Rate</label>
-                                <input type="number" id="invoice-rate" placeholder="e.g. 5000" required>
+                            <label><i class="fas fa-tasks"></i> Invoice Items</label>
+                            <div id="invoice-items">
+                                <div class="invoice-item">
+                                    <button class="remove-item"><i class="fas fa-times"></i></button>
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea class="item-desc" placeholder="Item description...">Website development services</textarea>
+                                    </div>
+                                    <div class="input-row">
+                                        <div class="form-group">
+                                            <label>Quantity</label>
+                                            <input type="number" class="item-quantity" placeholder="Qty" value="1">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Rate</label>
+                                            <input type="number" class="item-rate" placeholder="Rate" value="5000">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            
-                            <div class="form-group">
-                                <label for="quantity"><i class="fas fa-calculator"></i> Quantity (hours or units)</label>
-                                <input type="number" id="quantity" placeholder="e.g. 10" value="1" required>
-                            </div>
+                            <button type="button" class="btn btn-secondary" id="add-item">
+                                <i class="fas fa-plus"></i> Add Item
+                            </button>
                         </div>
                         
                         <div class="form-group">
@@ -1369,6 +1462,15 @@ For JazzCash/Easypaisa:
                         <div class="save-toggle">
                             <input type="checkbox" id="save-invoice" checked>
                             <label for="save-invoice">Save my information for next time</label>
+                        </div>
+                        
+                        <div class="template-actions">
+                            <button type="button" class="template-btn" id="export-invoice-json">
+                                <i class="fas fa-file-export"></i> Export as JSON
+                            </button>
+                            <button type="button" class="template-btn" id="import-invoice-json">
+                                <i class="fas fa-file-import"></i> Import JSON
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -1392,15 +1494,13 @@ For JazzCash/Easypaisa:
                             <div class="invoice-address">
                                 <h3>From:</h3>
                                 <p id="preview-your-name">[Your Name]</p>
-                                <p>Freelance Professional</p>
-                                <p>Karachi, Pakistan</p>
+                                <p id="preview-your-address">[Your Address]</p>
                             </div>
                             
                             <div class="invoice-address">
                                 <h3>To:</h3>
                                 <p id="preview-invoice-client">[Client Name]</p>
-                                <p>[Client Company]</p>
-                                <p>[Client Address]</p>
+                                <p id="preview-client-address">[Client Address]</p>
                             </div>
                         </div>
                         
@@ -1413,13 +1513,8 @@ For JazzCash/Easypaisa:
                                     <th>Total</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td id="preview-service-desc">[Service Description]</td>
-                                    <td id="preview-quantity">1</td>
-                                    <td id="preview-invoice-rate">0.00 PKR</td>
-                                    <td id="preview-total">0.00 PKR</td>
-                                </tr>
+                            <tbody id="preview-invoice-items">
+                                <!-- Items will be generated here -->
                             </tbody>
                         </table>
                         
@@ -1495,7 +1590,7 @@ For JazzCash/Easypaisa:
         
         <div class="container">
             <div class="copyright">
-                &copy; 2025 VintagePak Contracts. All rights reserved.
+                &copy; 2023 VintagePak Contracts. All rights reserved.
             </div>
             <div class="creator">
                 Crafted with <i class="fas fa-heart" style="color: var(--accent);"></i> by <a href="https://www.linkedin.com/in/aayanshaikhacca/" target="_blank">Aayan Shaikh</a>
@@ -1626,6 +1721,30 @@ For JazzCash/Easypaisa:
             
             // Load saved data if available
             loadSavedData();
+            
+            // Add item button
+            document.getElementById('add-item').addEventListener('click', addInvoiceItem);
+            
+            // Remove item event delegation
+            document.getElementById('invoice-items').addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-item') || e.target.closest('.remove-item')) {
+                    const item = e.target.closest('.invoice-item');
+                    if (item && document.querySelectorAll('.invoice-item').length > 1) {
+                        item.remove();
+                        updateInvoicePreview();
+                    } else {
+                        showToast('Invoice must have at least one item');
+                    }
+                }
+            });
+            
+            // Export/import JSON for contracts
+            document.getElementById('export-contract-json').addEventListener('click', exportContractJSON);
+            document.getElementById('import-contract-json').addEventListener('click', importContractJSON);
+            
+            // Export/import JSON for invoices
+            document.getElementById('export-invoice-json').addEventListener('click', exportInvoiceJSON);
+            document.getElementById('import-invoice-json').addEventListener('click', importInvoiceJSON);
         });
         
         // Show toast notification
@@ -1646,17 +1765,28 @@ For JazzCash/Easypaisa:
             return document.querySelector('.currency-btn.active').dataset.currency;
         }
         
-        // Format currency
+        // Format currency with locale-specific symbols
         function formatCurrency(amount) {
             const currency = getActiveCurrency();
-            const symbol = currency === 'USD' ? '$' : currency === 'EUR' ? '€' : 'PKR ';
-            return symbol + parseFloat(amount).toLocaleString('en-PK');
+            const formattedAmount = parseFloat(amount).toLocaleString('en-PK', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+            
+            switch(currency) {
+                case 'PKR': return '₨' + formattedAmount;
+                case 'USD': return '$' + formattedAmount;
+                case 'EUR': return '€' + formattedAmount;
+                default: return formattedAmount;
+            }
         }
         
         // Update contract preview
         function updateContractPreview() {
             const freelancerName = document.getElementById('freelancer-name').value || '[Freelancer Name]';
+            const freelancerAddress = document.getElementById('freelancer-address').value || '[Freelancer Address]';
             const clientName = document.getElementById('client-name').value || '[Client Name]';
+            const clientAddress = document.getElementById('client-address').value || '[Client Address]';
             const projectDesc = document.getElementById('project-desc').value || '[Project description will appear here]';
             const startDate = document.getElementById('start-date').value || '[Start Date]';
             const endDate = document.getElementById('end-date').value || '[End Date]';
@@ -1683,6 +1813,10 @@ For JazzCash/Easypaisa:
             }
             
             // Update preview
+            document.getElementById('preview-freelancer-name').textContent = freelancerName;
+            document.getElementById('preview-freelancer-address').textContent = freelancerAddress;
+            document.getElementById('preview-client-name').textContent = clientName;
+            document.getElementById('preview-client-address').textContent = clientAddress;
             document.getElementById('preview-freelancer-signature').textContent = freelancerSignature;
             document.getElementById('preview-client-signature').textContent = clientSignature;
             document.getElementById('preview-start-date').textContent = formattedStartDate;
@@ -1698,35 +1832,101 @@ For JazzCash/Easypaisa:
             }
         }
         
+        // Add new invoice item
+        function addInvoiceItem() {
+            const itemsContainer = document.getElementById('invoice-items');
+            const newItem = document.createElement('div');
+            newItem.className = 'invoice-item';
+            newItem.innerHTML = `
+                <button class="remove-item"><i class="fas fa-times"></i></button>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="item-desc" placeholder="Item description..."></textarea>
+                </div>
+                <div class="input-row">
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="number" class="item-quantity" placeholder="Qty" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Rate</label>
+                        <input type="number" class="item-rate" placeholder="Rate">
+                    </div>
+                </div>
+            `;
+            itemsContainer.appendChild(newItem);
+            
+            // Add event listeners to new inputs
+            const inputs = newItem.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('input', updateInvoicePreview);
+            });
+            
+            updateInvoicePreview();
+        }
+        
         // Update invoice preview
         function updateInvoicePreview() {
             const yourName = document.getElementById('your-name').value || '[Your Name]';
+            const yourAddress = document.getElementById('your-address').value || '[Your Address]';
             const clientName = document.getElementById('invoice-client').value || '[Client Name]';
+            const clientAddress = document.getElementById('client-address-invoice').value || '[Client Address]';
             const invoiceNumber = document.getElementById('invoice-number').value || 'INV-001';
             const invoiceDate = document.getElementById('invoice-date').value || '[Date]';
             const dueDate = document.getElementById('due-date').value || '[Due Date]';
-            const serviceDesc = document.getElementById('service-desc').value || '[Service Description]';
-            const rate = parseFloat(document.getElementById('invoice-rate').value) || 0;
-            const quantity = parseFloat(document.getElementById('quantity').value) || 0;
             const paymentDetails = document.getElementById('payment-details').value || '[Payment details will appear here]';
-            const total = rate * quantity;
             
             // Format dates
             const formattedInvoiceDate = invoiceDate !== '[Date]' ? new Date(invoiceDate).toLocaleDateString('en-PK') : invoiceDate;
             const formattedDueDate = dueDate !== '[Due Date]' ? new Date(dueDate).toLocaleDateString('en-PK') : dueDate;
             
+            // Get all invoice items
+            const items = [];
+            let totalAmount = 0;
+            
+            document.querySelectorAll('.invoice-item').forEach(item => {
+                const desc = item.querySelector('.item-desc').value || 'Service';
+                const quantity = parseFloat(item.querySelector('.item-quantity').value) || 0;
+                const rate = parseFloat(item.querySelector('.item-rate').value) || 0;
+                const total = quantity * rate;
+                
+                items.push({
+                    desc, 
+                    quantity, 
+                    rate, 
+                    total
+                });
+                
+                totalAmount += total;
+            });
+            
             // Update preview
             document.getElementById('preview-your-name').textContent = yourName;
+            document.getElementById('preview-your-address').textContent = yourAddress;
             document.getElementById('preview-invoice-client').textContent = clientName;
+            document.getElementById('preview-client-address').textContent = clientAddress;
             document.getElementById('preview-invoice-number').textContent = invoiceNumber;
             document.getElementById('preview-invoice-date').textContent = formattedInvoiceDate;
             document.getElementById('preview-due-date').textContent = formattedDueDate;
-            document.getElementById('preview-service-desc').textContent = serviceDesc;
-            document.getElementById('preview-quantity').textContent = quantity;
-            document.getElementById('preview-invoice-rate').textContent = formatCurrency(rate);
-            document.getElementById('preview-total').textContent = formatCurrency(total);
-            document.getElementById('preview-total-amount').textContent = formatCurrency(total);
             document.getElementById('preview-payment-info').innerHTML = paymentDetails.replace(/\n/g, '<br>');
+            
+            // Update invoice items table
+            const itemsContainer = document.getElementById('preview-invoice-items');
+            itemsContainer.innerHTML = '';
+            
+            items.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.desc}</td>
+                    <td>${item.quantity}</td>
+                    <td>${formatCurrency(item.rate)}</td>
+                    <td>${formatCurrency(item.total)}</td>
+                `;
+                itemsContainer.appendChild(row);
+            });
+            
+            // Update total amount
+            document.getElementById('preview-total-amount').textContent = formatCurrency(totalAmount);
             
             // Save data if checkbox is checked
             if (document.getElementById('save-invoice').checked) {
@@ -1738,7 +1938,9 @@ For JazzCash/Easypaisa:
         function saveContractData() {
             const contractData = {
                 freelancerName: document.getElementById('freelancer-name').value,
+                freelancerAddress: document.getElementById('freelancer-address').value,
                 clientName: document.getElementById('client-name').value,
+                clientAddress: document.getElementById('client-address').value,
                 projectTitle: document.getElementById('project-title').value,
                 projectDesc: document.getElementById('project-desc').value,
                 startDate: document.getElementById('start-date').value,
@@ -1756,15 +1958,24 @@ For JazzCash/Easypaisa:
         
         // Save invoice data to localStorage
         function saveInvoiceData() {
+            const items = [];
+            document.querySelectorAll('.invoice-item').forEach(item => {
+                items.push({
+                    desc: item.querySelector('.item-desc').value,
+                    quantity: item.querySelector('.item-quantity').value,
+                    rate: item.querySelector('.item-rate').value
+                });
+            });
+            
             const invoiceData = {
                 yourName: document.getElementById('your-name').value,
+                yourAddress: document.getElementById('your-address').value,
                 clientName: document.getElementById('invoice-client').value,
+                clientAddress: document.getElementById('client-address-invoice').value,
                 invoiceNumber: document.getElementById('invoice-number').value,
                 invoiceDate: document.getElementById('invoice-date').value,
                 dueDate: document.getElementById('due-date').value,
-                serviceDesc: document.getElementById('service-desc').value,
-                rate: document.getElementById('invoice-rate').value,
-                quantity: document.getElementById('quantity').value,
+                items: items,
                 paymentDetails: document.getElementById('payment-details').value
             };
             
@@ -1777,7 +1988,9 @@ For JazzCash/Easypaisa:
             const contractData = JSON.parse(localStorage.getItem('contractData'));
             if (contractData) {
                 document.getElementById('freelancer-name').value = contractData.freelancerName || '';
+                document.getElementById('freelancer-address').value = contractData.freelancerAddress || '';
                 document.getElementById('client-name').value = contractData.clientName || '';
+                document.getElementById('client-address').value = contractData.clientAddress || '';
                 document.getElementById('project-title').value = contractData.projectTitle || '';
                 document.getElementById('project-desc').value = contractData.projectDesc || '';
                 document.getElementById('start-date').value = contractData.startDate || new Date().toISOString().split('T')[0];
@@ -1801,14 +2014,34 @@ For JazzCash/Easypaisa:
             const invoiceData = JSON.parse(localStorage.getItem('invoiceData'));
             if (invoiceData) {
                 document.getElementById('your-name').value = invoiceData.yourName || '';
+                document.getElementById('your-address').value = invoiceData.yourAddress || '';
                 document.getElementById('invoice-client').value = invoiceData.clientName || '';
+                document.getElementById('client-address-invoice').value = invoiceData.clientAddress || '';
                 document.getElementById('invoice-number').value = invoiceData.invoiceNumber || 'INV-001';
                 document.getElementById('invoice-date').value = invoiceData.invoiceDate || new Date().toISOString().split('T')[0];
                 document.getElementById('due-date').value = invoiceData.dueDate || new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-                document.getElementById('service-desc').value = invoiceData.serviceDesc || '';
-                document.getElementById('invoice-rate').value = invoiceData.rate || '';
-                document.getElementById('quantity').value = invoiceData.quantity || '1';
                 document.getElementById('payment-details').value = invoiceData.paymentDetails || '';
+                
+                // Clear existing items
+                document.getElementById('invoice-items').innerHTML = '';
+                
+                // Add items
+                if (invoiceData.items && invoiceData.items.length > 0) {
+                    invoiceData.items.forEach(itemData => {
+                        addInvoiceItem();
+                        const items = document.querySelectorAll('.invoice-item');
+                        const lastItem = items[items.length - 1];
+                        
+                        if (lastItem) {
+                            lastItem.querySelector('.item-desc').value = itemData.desc || '';
+                            lastItem.querySelector('.item-quantity').value = itemData.quantity || '1';
+                            lastItem.querySelector('.item-rate').value = itemData.rate || '';
+                        }
+                    });
+                } else {
+                    // Add one default item if none exist
+                    addInvoiceItem();
+                }
                 
                 updateInvoicePreview();
             }
@@ -1930,6 +2163,176 @@ For JazzCash/Easypaisa:
             navigator.clipboard.writeText(invoiceText).then(() => {
                 showToast('Invoice text copied to clipboard!');
             });
+        }
+        
+        // Export contract as JSON
+        function exportContractJSON() {
+            const contractData = {
+                freelancerName: document.getElementById('freelancer-name').value,
+                freelancerAddress: document.getElementById('freelancer-address').value,
+                clientName: document.getElementById('client-name').value,
+                clientAddress: document.getElementById('client-address').value,
+                projectTitle: document.getElementById('project-title').value,
+                projectDesc: document.getElementById('project-desc').value,
+                startDate: document.getElementById('start-date').value,
+                endDate: document.getElementById('end-date').value,
+                paymentType: document.getElementById('payment-type').value,
+                rate: document.getElementById('rate').value,
+                hours: document.getElementById('hours').value,
+                paymentTerms: document.getElementById('payment-terms').value,
+                freelancerSignature: document.getElementById('freelancer-signature').value,
+                clientSignature: document.getElementById('client-signature').value
+            };
+            
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(contractData, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "vintagepak-contract-template.json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+            
+            showToast('Contract template exported!');
+        }
+        
+        // Import contract JSON
+        function importContractJSON() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = e => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.readAsText(file, 'UTF-8');
+                
+                reader.onload = readerEvent => {
+                    try {
+                        const contractData = JSON.parse(readerEvent.target.result);
+                        
+                        // Populate form fields
+                        document.getElementById('freelancer-name').value = contractData.freelancerName || '';
+                        document.getElementById('freelancer-address').value = contractData.freelancerAddress || '';
+                        document.getElementById('client-name').value = contractData.clientName || '';
+                        document.getElementById('client-address').value = contractData.clientAddress || '';
+                        document.getElementById('project-title').value = contractData.projectTitle || '';
+                        document.getElementById('project-desc').value = contractData.projectDesc || '';
+                        document.getElementById('start-date').value = contractData.startDate || new Date().toISOString().split('T')[0];
+                        document.getElementById('end-date').value = contractData.endDate || new Date().toISOString().split('T')[0];
+                        document.getElementById('payment-type').value = contractData.paymentType || '';
+                        document.getElementById('rate').value = contractData.rate || '';
+                        document.getElementById('hours').value = contractData.hours || '';
+                        document.getElementById('payment-terms').value = contractData.paymentTerms || '';
+                        document.getElementById('freelancer-signature').value = contractData.freelancerSignature || '';
+                        document.getElementById('client-signature').value = contractData.clientSignature || '';
+                        
+                        // Show hours if hourly payment
+                        if (contractData.paymentType === 'hourly') {
+                            document.getElementById('hours-group').style.display = 'block';
+                        }
+                        
+                        updateContractPreview();
+                        showToast('Contract template imported!');
+                    } catch (error) {
+                        showToast('Error importing contract template');
+                        console.error(error);
+                    }
+                };
+            };
+            
+            input.click();
+        }
+        
+        // Export invoice as JSON
+        function exportInvoiceJSON() {
+            const items = [];
+            document.querySelectorAll('.invoice-item').forEach(item => {
+                items.push({
+                    desc: item.querySelector('.item-desc').value,
+                    quantity: item.querySelector('.item-quantity').value,
+                    rate: item.querySelector('.item-rate').value
+                });
+            });
+            
+            const invoiceData = {
+                yourName: document.getElementById('your-name').value,
+                yourAddress: document.getElementById('your-address').value,
+                clientName: document.getElementById('invoice-client').value,
+                clientAddress: document.getElementById('client-address-invoice').value,
+                invoiceNumber: document.getElementById('invoice-number').value,
+                invoiceDate: document.getElementById('invoice-date').value,
+                dueDate: document.getElementById('due-date').value,
+                items: items,
+                paymentDetails: document.getElementById('payment-details').value
+            };
+            
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(invoiceData, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "vintagepak-invoice-template.json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+            
+            showToast('Invoice template exported!');
+        }
+        
+        // Import invoice JSON
+        function importInvoiceJSON() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            
+            input.onchange = e => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.readAsText(file, 'UTF-8');
+                
+                reader.onload = readerEvent => {
+                    try {
+                        const invoiceData = JSON.parse(readerEvent.target.result);
+                        
+                        // Populate form fields
+                        document.getElementById('your-name').value = invoiceData.yourName || '';
+                        document.getElementById('your-address').value = invoiceData.yourAddress || '';
+                        document.getElementById('invoice-client').value = invoiceData.clientName || '';
+                        document.getElementById('client-address-invoice').value = invoiceData.clientAddress || '';
+                        document.getElementById('invoice-number').value = invoiceData.invoiceNumber || 'INV-001';
+                        document.getElementById('invoice-date').value = invoiceData.invoiceDate || new Date().toISOString().split('T')[0];
+                        document.getElementById('due-date').value = invoiceData.dueDate || new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+                        document.getElementById('payment-details').value = invoiceData.paymentDetails || '';
+                        
+                        // Clear existing items
+                        document.getElementById('invoice-items').innerHTML = '';
+                        
+                        // Add items
+                        if (invoiceData.items && invoiceData.items.length > 0) {
+                            invoiceData.items.forEach(itemData => {
+                                addInvoiceItem();
+                                const items = document.querySelectorAll('.invoice-item');
+                                const lastItem = items[items.length - 1];
+                                
+                                if (lastItem) {
+                                    lastItem.querySelector('.item-desc').value = itemData.desc || '';
+                                    lastItem.querySelector('.item-quantity').value = itemData.quantity || '1';
+                                    lastItem.querySelector('.item-rate').value = itemData.rate || '';
+                                }
+                            });
+                        } else {
+                            // Add one default item if none exist
+                            addInvoiceItem();
+                        }
+                        
+                        updateInvoicePreview();
+                        showToast('Invoice template imported!');
+                    } catch (error) {
+                        showToast('Error importing invoice template');
+                        console.error(error);
+                    }
+                };
+            };
+            
+            input.click();
         }
     </script>
 </body>
