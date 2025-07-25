@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VintagePak Contracts | Classic Agreements & Invoices</title>
+    <title>VintagePak Contracts | Professional Agreements & Invoices</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Playfair+Display:wght@700&family=Marcellus&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -81,34 +81,19 @@
         }
 
         .logo {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--light);
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-family: 'Marcellus', serif;
-            letter-spacing: 1px;
-        }
-
-        .logo span {
-            color: var(--accent);
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
+            gap: 15px;
         }
 
         .logo-icon {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: var(--light);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            border: 2px solid var(--accent);
-            box-shadow: 0 0 0 2px var(--primary-dark);
+            font-size: 1.5rem;
+            color: var(--accent);
         }
 
         nav ul {
@@ -180,7 +165,7 @@
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 3.2rem;
             margin-bottom: 25px;
             line-height: 1.2;
             font-weight: 700;
@@ -622,7 +607,7 @@
         .contract-disclaimer {
             margin-top: 50px;
             padding: 20px;
-            background: rgba(160, 82, 45, 0.05);
+            background: rgba(160, 82, 45, 0.08);
             border-radius: var(--radius);
             border-left: 4px solid var(--danger);
             font-size: 1rem;
@@ -1025,14 +1010,45 @@
             left: 0;
             z-index: 1;
         }
+        
+        /* Print styles */
+        @media print {
+            header, .form-container, .action-buttons, .back-to-home, footer {
+                display: none !important;
+            }
+            
+            body, .container, .preview-container {
+                padding: 0;
+                margin: 0;
+            }
+            
+            .contract-preview, .invoice-preview {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+            }
+            
+            .section-divider, .vintage-border {
+                display: none;
+            }
+        }
+        
+        .legal-warning {
+            background: rgba(160, 82, 45, 0.08);
+            padding: 15px;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--danger);
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="container header-container">
             <div class="logo">
-                <div class="logo-icon">VI</div>
-                Vintage<span>Pak</span>
+                <i class="fas fa-file-contract logo-icon"></i>
+                VintagePak Contracts
             </div>
             <nav>
                 <ul>
@@ -1048,8 +1064,8 @@
         <!-- Landing Page -->
         <section id="home" class="section active">
             <div class="hero">
-                <h1>Classic Contracts & Invoices</h1>
-                <p>Create timeless agreements with the elegance of 60s-70s Pakistan. Professional templates designed for freelancers with a touch of vintage charm.</p>
+                <h1>Professional Contracts & Invoices</h1>
+                <p>Create legally sound agreements with a touch of vintage elegance. Professional templates designed for freelancers.</p>
                 <div class="cta-container">
                     <button class="btn btn-primary" data-section="contract">
                         <i class="fas fa-file-contract"></i>
@@ -1069,24 +1085,24 @@
                     <div class="feature-icon">
                         <i class="fas fa-gavel"></i>
                     </div>
-                    <h3>Heritage Agreements</h3>
-                    <p>Professionally crafted contracts with the timeless elegance of Pakistani legal traditions from the golden era.</p>
+                    <h3>Legally Sound Agreements</h3>
+                    <p>Professionally crafted contracts with clear terms and conditions for freelance projects.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-file-invoice"></i>
                     </div>
-                    <h3>Classic Invoicing</h3>
-                    <p>Create invoices with vintage charm that maintain professionalism while honoring traditional aesthetics.</p>
+                    <h3>Professional Invoicing</h3>
+                    <p>Create detailed invoices with clear payment terms and breakdowns for your clients.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-lock"></i>
                     </div>
-                    <h3>Timeless Security</h3>
-                    <p>Your information remains private with our locally processed, vintage-inspired security approach.</p>
+                    <h3>Data Privacy</h3>
+                    <p>Your information remains private with locally processed data. We don't store your sensitive information.</p>
                 </div>
             </div>
         </section>
@@ -1094,7 +1110,7 @@
         <!-- Contract Generator Module -->
         <section id="contract" class="section module-container">
             <div class="module-header">
-                <h2 class="module-title">Vintage Contract Generator</h2>
+                <h2 class="module-title">Contract Generator</h2>
                 <button class="btn btn-secondary back-to-home">
                     <i class="fas fa-arrow-left"></i>
                     Back to Home
@@ -1104,6 +1120,9 @@
             <div class="module-content">
                 <div class="form-container">
                     <h3>Contract Details</h3>
+                    <div class="legal-warning">
+                        <p><strong>Disclaimer:</strong> This tool provides templates only. We are not responsible for legal accuracy. Consult a professional for legal advice.</p>
+                    </div>
                     <form id="contract-form">
                         <div class="currency-toggle">
                             <span>Currency:</span>
@@ -1241,7 +1260,7 @@
                         </div>
                         
                         <div class="contract-disclaimer">
-                            <p><strong>Disclaimer:</strong> This contract is provided as a template for informational purposes only and does not constitute legal advice. While designed to comply with Pakistani laws, it may not cover all specific circumstances. Parties are advised to consult with a qualified legal professional before signing any legally binding agreement.</p>
+                            <p><strong>Important Disclaimer:</strong> This contract is provided as a template for informational purposes only and does not constitute legal advice. While designed to comply with Pakistani laws, it may not cover all specific circumstances. VintagePak Contracts is not responsible for any legal disputes. Parties are advised to consult with a qualified legal professional before signing any legally binding agreement.</p>
                         </div>
                     </div>
                     
@@ -1266,7 +1285,7 @@
         <!-- Invoice Generator Module -->
         <section id="invoice" class="section module-container">
             <div class="module-header">
-                <h2 class="module-title">Classic Invoice Generator</h2>
+                <h2 class="module-title">Invoice Generator</h2>
                 <button class="btn btn-secondary back-to-home">
                     <i class="fas fa-arrow-left"></i>
                     Back to Home
@@ -1276,6 +1295,9 @@
             <div class="module-content">
                 <div class="form-container">
                     <h3>Invoice Details</h3>
+                    <div class="legal-warning">
+                        <p><strong>Disclaimer:</strong> This tool generates invoices only. We are not responsible for financial accuracy. Verify all details before sending.</p>
+                    </div>
                     <form id="invoice-form">
                         <div class="currency-toggle">
                             <span>Currency:</span>
@@ -1411,7 +1433,7 @@ For JazzCash/Easypaisa:
                         </div>
                         
                         <div class="contract-disclaimer" style="margin-top: 30px;">
-                            <p><strong>Note:</strong> Payment is due within 15 days of invoice date. Late payments will incur a monthly interest charge of 1.5% on the outstanding balance.</p>
+                            <p><strong>Important Disclaimer:</strong> This invoice is generated for informational purposes. VintagePak Contracts is not responsible for any discrepancies or legal issues arising from its use. Always ensure the accuracy of the information before sending to clients.</p>
                         </div>
                     </div>
                     
@@ -1438,16 +1460,16 @@ For JazzCash/Easypaisa:
         <div class="container footer-container">
             <div class="footer-section">
                 <h3>VintagePak Contracts</h3>
-                <p>Preserving the elegance of Pakistani heritage through timeless contract and invoice solutions for modern professionals.</p>
+                <p>Professional tools for freelancers with a touch of vintage elegance.</p>
             </div>
             
             <div class="footer-section">
                 <h3>Resources</h3>
                 <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-file-contract"></i> Heritage Templates</a></li>
-                    <li><a href="#"><i class="fas fa-file-invoice"></i> Vintage Invoices</a></li>
-                    <li><a href="#"><i class="fas fa-book"></i> Legal Heritage Guide</a></li>
-                    <li><a href="#"><i class="fas fa-calculator"></i> Classic Calculator</a></li>
+                    <li><a href="#"><i class="fas fa-file-contract"></i> Contract Templates</a></li>
+                    <li><a href="#"><i class="fas fa-file-invoice"></i> Invoice Templates</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> Freelancer Resources</a></li>
+                    <li><a href="#"><i class="fas fa-calculator"></i> Rate Calculator</a></li>
                 </ul>
             </div>
             
@@ -1473,10 +1495,10 @@ For JazzCash/Easypaisa:
         
         <div class="container">
             <div class="copyright">
-                &copy; 2025 VintagePak Contracts. Celebrating Pakistani heritage since 2025.
+                &copy; 2025 VintagePak Contracts. All rights reserved.
             </div>
             <div class="creator">
-                Crafted with <i class="fas fa-heart" style="color: var(--accent);"></i> by <a href="#" target="_blank">Heritage Design Studio</a>
+                Crafted with <i class="fas fa-heart" style="color: var(--accent);"></i> by <a href="https://www.linkedin.com/in/aayanshaikhacca/" target="_blank">Aayan Shaikh</a>
             </div>
         </div>
     </footer>
@@ -1811,7 +1833,7 @@ For JazzCash/Easypaisa:
             
             // Temporarily set to A4 dimensions
             element.style.width = '794px';
-            element.style.height = '1123px';
+            element.style.height = 'auto';
             
             html2canvas(element, {
                 scale: 2,
@@ -1825,8 +1847,23 @@ For JazzCash/Easypaisa:
                 const pdfWidth = pdf.internal.pageSize.getWidth();
                 const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
                 
-                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-                pdf.save('vintage-contract.pdf');
+                // Add a new page if content is too long
+                let position = 0;
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                
+                while (position < pdfHeight) {
+                    if (position > 0) {
+                        pdf.addPage();
+                    }
+                    
+                    const heightLeft = pdfHeight - position;
+                    const canFit = Math.min(pageHeight, heightLeft);
+                    
+                    pdf.addImage(imgData, 'PNG', 0, -position, pdfWidth, pdfHeight);
+                    position += pageHeight;
+                }
+                
+                pdf.save('professional-contract.pdf');
                 
                 // Restore original dimensions
                 element.style.width = originalWidth;
@@ -1844,7 +1881,7 @@ For JazzCash/Easypaisa:
             
             // Temporarily set to A4 dimensions
             element.style.width = '794px';
-            element.style.height = '1123px';
+            element.style.height = 'auto';
             
             html2canvas(element, {
                 scale: 2,
@@ -1858,8 +1895,23 @@ For JazzCash/Easypaisa:
                 const pdfWidth = pdf.internal.pageSize.getWidth();
                 const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
                 
-                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-                pdf.save('vintage-invoice.pdf');
+                // Add a new page if content is too long
+                let position = 0;
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                
+                while (position < pdfHeight) {
+                    if (position > 0) {
+                        pdf.addPage();
+                    }
+                    
+                    const heightLeft = pdfHeight - position;
+                    const canFit = Math.min(pageHeight, heightLeft);
+                    
+                    pdf.addImage(imgData, 'PNG', 0, -position, pdfWidth, pdfHeight);
+                    position += pageHeight;
+                }
+                
+                pdf.save('professional-invoice.pdf');
                 
                 // Restore original dimensions
                 element.style.width = originalWidth;
