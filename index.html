@@ -166,7 +166,7 @@
         
         .loading-text {
             font-family: var(--font-heading);
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
             color: var(--primary-dark);
             opacity: 0.8;
         }
@@ -217,7 +217,7 @@
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: clamp(1.5rem, 3vw, 1.8rem);
             font-weight: 700;
             color: var(--light);
             font-family: var(--font-heading);
@@ -295,7 +295,7 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 32px;
+            gap: clamp(15px, 2vw, 32px);
         }
 
         nav a {
@@ -305,7 +305,7 @@
             transition: var(--transition);
             position: relative;
             padding: 8px 0;
-            font-size: 1.15rem;
+            font-size: clamp(1rem, 1.5vw, 1.15rem);
             letter-spacing: 0.5px;
             font-family: var(--font-ui);
         }
@@ -331,7 +331,7 @@
 
         /* Landing Page */
         .hero {
-            padding: 120px 0 80px;
+            padding: clamp(60px, 8vw, 120px) 0 clamp(40px, 6vw, 80px);
             text-align: center;
             max-width: 800px;
             margin: 0 auto;
@@ -365,7 +365,7 @@
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 3.2rem);
+            font-size: clamp(2rem, 5vw, 3.2rem);
             margin-bottom: 25px;
             line-height: 1.2;
             font-weight: 700;
@@ -393,9 +393,9 @@
         }
 
         .hero p {
-            font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+            font-size: clamp(1rem, 2.5vw, 1.35rem);
             color: var(--text-dark);
-            margin-bottom: 50px;
+            margin-bottom: clamp(30px, 5vw, 50px);
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
@@ -410,18 +410,18 @@
             display: flex;
             gap: 24px;
             justify-content: center;
-            margin-top: 40px;
+            margin-top: clamp(20px, 4vw, 40px);
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 16px 42px;
+            padding: clamp(12px, 1.5vw, 16px) clamp(24px, 3vw, 42px);
             border-radius: var(--radius);
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             border: none;
-            font-size: 1.15rem;
+            font-size: clamp(1rem, 1.5vw, 1.15rem);
             display: inline-flex;
             align-items: center;
             gap: 12px;
@@ -483,15 +483,15 @@
 
         .features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
-            margin: 100px 0;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: clamp(25px, 4vw, 40px);
+            margin: clamp(50px, 8vw, 100px) 0;
         }
 
         .feature-card {
             background: var(--glass-bg);
             border-radius: var(--radius);
-            padding: 40px 32px;
+            padding: clamp(25px, 3vw, 40px) clamp(20px, 2.5vw, 32px);
             box-shadow: var(--glass-shadow);
             transition: var(--transition);
             backdrop-filter: blur(10px);
@@ -538,13 +538,13 @@
         }
 
         .feature-icon i {
-            font-size: 32px;
+            font-size: clamp(28px, 2.5vw, 32px);
             color: var(--primary-dark);
         }
 
         .feature-card h3 {
             margin-bottom: 15px;
-            font-size: 1.7rem;
+            font-size: clamp(1.4rem, 2vw, 1.7rem);
             color: var(--text-dark);
             font-family: var(--font-heading);
             position: relative;
@@ -569,7 +569,7 @@
 
         .feature-card p {
             color: var(--text-dark);
-            font-size: 1.15rem;
+            font-size: clamp(1rem, 1.5vw, 1.15rem);
             font-weight: 500;
         }
         
@@ -580,14 +580,14 @@
         /* Module Containers */
         .module-container {
             display: none;
-            padding: 80px 0;
+            padding: clamp(40px, 6vw, 80px) 0;
         }
 
         .module-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 50px;
+            margin-bottom: clamp(30px, 5vw, 50px);
             flex-wrap: wrap;
             gap: 20px;
             position: relative;
@@ -606,7 +606,7 @@
         }
 
         .module-title {
-            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
             font-weight: 700;
             color: var(--primary-dark);
             font-family: var(--font-heading);
@@ -632,7 +632,7 @@
         .module-content {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 50px;
+            gap: clamp(30px, 4vw, 50px);
         }
 
         @media (min-width: 992px) {
@@ -644,7 +644,7 @@
         .form-container, .preview-container {
             background: var(--glass-bg);
             border-radius: var(--radius);
-            padding: 40px;
+            padding: clamp(20px, 3vw, 40px);
             box-shadow: var(--glass-shadow);
             backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
@@ -674,7 +674,7 @@
         }
 
         .form-group {
-            margin-bottom: 30px;
+            margin-bottom: clamp(20px, 3vw, 30px);
             position: relative;
         }
 
@@ -683,7 +683,7 @@
             margin-bottom: 12px;
             font-weight: 600;
             color: var(--text-dark);
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 1.2vw, 1.1rem);
             font-family: var(--font-ui);
             display: flex;
             align-items: center;
@@ -696,11 +696,11 @@
 
         input, textarea, select {
             width: 100%;
-            padding: 15px 20px;
+            padding: clamp(12px, 1.5vw, 15px) clamp(15px, 2vw, 20px);
             border: 1px solid var(--border);
             border-radius: var(--radius);
             font-family: var(--font-body);
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 1.2vw, 1.1rem);
             transition: var(--transition);
             background: rgba(255, 255, 255, 0.5);
             color: var(--text-dark);
@@ -734,18 +734,18 @@
         .input-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 25px;
+            gap: clamp(15px, 2vw, 25px);
         }
 
         .action-buttons {
             display: flex;
-            gap: 16px;
+            gap: clamp(10px, 1.5vw, 16px);
             flex-wrap: wrap;
-            margin-top: 35px;
+            margin-top: clamp(20px, 3vw, 35px);
         }
 
         .action-btn {
-            padding: 14px 28px;
+            padding: clamp(10px, 1.5vw, 14px) clamp(18px, 2.5vw, 28px);
             border-radius: var(--radius);
             font-weight: 600;
             cursor: pointer;
@@ -755,7 +755,7 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            font-size: 1.05rem;
+            font-size: clamp(0.95rem, 1.2vw, 1.05rem);
             font-family: var(--font-ui);
             color: var(--text-dark);
         }
@@ -790,7 +790,7 @@
         .contract-preview {
             font-family: var(--font-body);
             line-height: 1.8;
-            padding: 40px;
+            padding: clamp(25px, 3vw, 40px);
             background: var(--glass-bg);
             border: 1px solid var(--border);
             border-radius: var(--radius);
@@ -816,8 +816,8 @@
 
         .contract-preview h1 {
             text-align: center;
-            margin-bottom: 40px;
-            font-size: 2rem;
+            margin-bottom: clamp(25px, 3vw, 40px);
+            font-size: clamp(1.6rem, 2.5vw, 2rem);
             color: var(--primary-dark);
             font-weight: 700;
             font-family: var(--font-heading);
@@ -842,8 +842,8 @@
         }
 
         .contract-preview h2 {
-            font-size: 1.5rem;
-            margin: 35px 0 20px;
+            font-size: clamp(1.3rem, 2vw, 1.5rem);
+            margin: clamp(25px, 3vw, 35px) 0 clamp(15px, 2vw, 20px);
             color: var(--primary-dark);
             padding-bottom: 8px;
             border-bottom: 1px solid var(--light-gray);
@@ -856,8 +856,8 @@
         }
 
         .contract-preview p {
-            margin-bottom: 20px;
-            font-size: 1.15rem;
+            margin-bottom: clamp(15px, 2vw, 20px);
+            font-size: clamp(1rem, 1.2vw, 1.15rem);
         }
         
         .dark-mode .contract-preview p {
@@ -865,15 +865,15 @@
         }
 
         .contract-signature {
-            margin-top: 70px;
+            margin-top: clamp(40px, 6vw, 70px);
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 50px;
+            gap: clamp(30px, 4vw, 50px);
         }
 
         .contract-signature div {
             position: relative;
-            padding-top: 40px;
+            padding-top: clamp(25px, 3vw, 40px);
         }
 
         .contract-signature div::before {
@@ -897,12 +897,12 @@
         }
 
         .contract-disclaimer {
-            margin-top: 50px;
-            padding: 20px;
+            margin-top: clamp(30px, 4vw, 50px);
+            padding: clamp(15px, 2vw, 20px);
             background: rgba(160, 82, 45, 0.08);
             border-radius: var(--radius);
             border-left: 4px solid var(--danger);
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 1.1vw, 1rem);
         }
         
         .dark-mode .contract-disclaimer {
@@ -912,7 +912,7 @@
         /* Invoice Preview */
         .invoice-preview {
             font-family: var(--font-body);
-            padding: 40px;
+            padding: clamp(25px, 3vw, 40px);
             background: var(--glass-bg);
             border: 1px solid var(--border);
             border-radius: var(--radius);
@@ -939,13 +939,13 @@
         .invoice-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 50px;
+            margin-bottom: clamp(30px, 4vw, 50px);
             flex-wrap: wrap;
             gap: 20px;
         }
 
         .invoice-title {
-            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
             font-weight: 700;
             color: var(--primary-dark);
             position: relative;
@@ -974,7 +974,7 @@
 
         .invoice-meta p {
             margin-bottom: 8px;
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 1.2vw, 1.1rem);
         }
         
         .dark-mode .invoice-meta p {
@@ -984,13 +984,13 @@
         .invoice-addresses {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 50px;
+            gap: clamp(25px, 3vw, 40px);
+            margin-bottom: clamp(30px, 4vw, 50px);
         }
 
         .invoice-address {
             background: rgba(232, 224, 213, 0.5);
-            padding: 25px;
+            padding: clamp(15px, 2.5vw, 25px);
             border-radius: var(--radius);
             border: 1px solid rgba(201, 184, 167, 0.5);
         }
@@ -1001,8 +1001,8 @@
         }
 
         .invoice-address h3 {
-            margin-bottom: 18px;
-            font-size: 1.3rem;
+            margin-bottom: clamp(12px, 1.5vw, 18px);
+            font-size: clamp(1.1rem, 1.5vw, 1.3rem);
             color: var(--primary-dark);
             font-family: var(--font-heading);
             position: relative;
@@ -1027,13 +1027,13 @@
         .invoice-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 40px 0;
-            font-size: 1.1rem;
+            margin: clamp(25px, 3vw, 40px) 0;
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
         }
 
         .invoice-table th {
             text-align: left;
-            padding: 16px;
+            padding: clamp(12px, 1.5vw, 16px);
             background: rgba(232, 224, 213, 0.5);
             border-bottom: 1px solid var(--border);
             font-weight: 600;
@@ -1046,7 +1046,7 @@
         }
 
         .invoice-table td {
-            padding: 16px;
+            padding: clamp(12px, 1.5vw, 16px);
             border-bottom: 1px solid var(--border);
         }
         
@@ -1056,8 +1056,8 @@
 
         .invoice-total {
             text-align: right;
-            margin: 50px 0;
-            font-size: 1.4rem;
+            margin: clamp(30px, 4vw, 50px) 0;
+            font-size: clamp(1.2rem, 1.8vw, 1.4rem);
             font-weight: 700;
             color: var(--primary-dark);
             font-family: var(--font-heading);
@@ -1069,7 +1069,7 @@
 
         .invoice-payment {
             background: rgba(232, 224, 213, 0.5);
-            padding: 35px;
+            padding: clamp(25px, 3vw, 35px);
             border-radius: var(--radius);
             border: 1px solid rgba(201, 184, 167, 0.5);
         }
@@ -1080,8 +1080,8 @@
         }
 
         .invoice-payment h3 {
-            margin-bottom: 18px;
-            font-size: 1.4rem;
+            margin-bottom: clamp(12px, 1.5vw, 18px);
+            font-size: clamp(1.2rem, 1.8vw, 1.4rem);
             color: var(--primary-dark);
             font-family: var(--font-heading);
             position: relative;
@@ -1107,8 +1107,8 @@
         footer {
             background: var(--dark);
             color: var(--light-gray);
-            padding: 80px 0 40px;
-            margin-top: 100px;
+            padding: clamp(40px, 6vw, 80px) 0 clamp(20px, 3vw, 40px);
+            margin-top: clamp(60px, 8vw, 100px);
             position: relative;
         }
         
@@ -1130,14 +1130,14 @@
         .footer-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 60px;
+            gap: clamp(40px, 5vw, 60px);
         }
 
         .footer-section h3 {
-            font-size: 1.5rem;
-            margin-bottom: 25px;
+            font-size: clamp(1.3rem, 1.8vw, 1.5rem);
+            margin-bottom: clamp(15px, 2.5vw, 25px);
             position: relative;
-            padding-bottom: 18px;
+            padding-bottom: clamp(12px, 1.8vw, 18px);
             font-weight: 700;
             font-family: var(--font-heading);
             color: var(--light);
@@ -1163,14 +1163,14 @@
         }
 
         .footer-links li {
-            margin-bottom: 18px;
+            margin-bottom: clamp(12px, 1.5vw, 18px);
         }
 
         .footer-links a {
             color: #C9B8A7;
             text-decoration: none;
             transition: var(--transition);
-            font-size: 1.15rem;
+            font-size: clamp(1rem, 1.2vw, 1.15rem);
             display: flex;
             align-items: center;
             gap: 12px;
@@ -1187,10 +1187,10 @@
 
         .copyright {
             text-align: center;
-            padding-top: 60px;
+            padding-top: clamp(30px, 5vw, 60px);
             color: #C9B8A7;
-            font-size: 1.1rem;
-            margin-top: 40px;
+            font-size: clamp(1rem, 1.2vw, 1.1rem);
+            margin-top: clamp(20px, 3vw, 40px);
             position: relative;
         }
         
@@ -1201,7 +1201,7 @@
         .copyright::before {
             content: '';
             position: absolute;
-            top: 30px;
+            top: clamp(15px, 2.5vw, 30px);
             left: 50%;
             transform: translateX(-50%);
             width: 200px;
@@ -1215,8 +1215,8 @@
 
         .creator {
             text-align: center;
-            margin-top: 20px;
-            font-size: 1.15rem;
+            margin-top: clamp(10px, 1.5vw, 20px);
+            font-size: clamp(1rem, 1.2vw, 1.15rem);
             color: #C9B8A7;
         }
         
@@ -1828,13 +1828,13 @@
                         <div class="input-row">
                             <div class="form-group" id="rate-group">
                                 <label for="rate"><i class="fas fa-coins"></i> Rate</label>
-                                <input type="number" id="rate" placeholder="e.g. 5000" required>
+                                <input type="number" id="rate" placeholder="e.g. 5000" min="0" required>
                                 <div class="error-message" id="rate-error">This field is required</div>
                             </div>
                             
                             <div class="form-group" id="hours-group" style="display: none;">
                                 <label for="hours"><i class="fas fa-clock"></i> Total Hours</label>
-                                <input type="number" id="hours" placeholder="e.g. 40">
+                                <input type="number" id="hours" placeholder="e.g. 40" min="0">
                             </div>
                         </div>
                         
@@ -2102,11 +2102,11 @@
                                     <div class="input-row">
                                         <div class="form-group">
                                             <label>Quantity</label>
-                                            <input type="number" class="item-quantity" placeholder="Qty" value="1">
+                                            <input type="number" class="item-quantity" placeholder="Qty" value="1" min="1">
                                         </div>
                                         <div class="form-group">
                                             <label>Rate</label>
-                                            <input type="number" class="item-rate" placeholder="Rate" value="5000">
+                                            <input type="number" class="item-rate" placeholder="Rate" value="5000" min="0">
                                         </div>
                                     </div>
                                 </div>
@@ -2323,7 +2323,8 @@ For JazzCash/Easypaisa:
 
     <script>
         // App version for localStorage
-        const APP_VERSION = "1.1";
+        const APP_VERSION = "2.0";
+        let isGeneratingPDF = false;
         
         // Navigation and Section Switching
         document.addEventListener('DOMContentLoaded', function() {
@@ -3181,11 +3182,11 @@ For JazzCash/Easypaisa:
                 <div class="input-row">
                     <div class="form-group">
                         <label>Quantity</label>
-                        <input type="number" class="item-quantity" placeholder="Qty" value="${itemData ? itemData.quantity : '1'}">
+                        <input type="number" class="item-quantity" placeholder="Qty" value="${itemData ? itemData.quantity : '1'}" min="1">
                     </div>
                     <div class="form-group">
                         <label>Rate</label>
-                        <input type="number" class="item-rate" placeholder="Rate" value="${itemData ? itemData.rate : '0'}">
+                        <input type="number" class="item-rate" placeholder="Rate" value="${itemData ? itemData.rate : '0'}" min="0">
                     </div>
                 </div>
             `;
@@ -3427,6 +3428,9 @@ For JazzCash/Easypaisa:
         
         // Generate contract PDF
         function generateContractPDF() {
+            if (isGeneratingPDF) return;
+            isGeneratingPDF = true;
+            
             const pdfLoading = document.getElementById('pdf-loading');
             pdfLoading.style.display = 'flex';
             
@@ -3441,7 +3445,8 @@ For JazzCash/Easypaisa:
                     html2canvas(element, {
                         scale: 2,
                         useCORS: true,
-                        logging: false
+                        logging: false,
+                        backgroundColor: document.body.classList.contains('dark-mode') ? '#2D2A28' : '#F8F4E9'
                     }).then(canvas => {
                         const imgData = canvas.toDataURL('image/png');
                         const pdf = new jsPDF('p', 'mm', 'a4');
@@ -3455,10 +3460,12 @@ For JazzCash/Easypaisa:
                         
                         pdf.save(`vintagepak-contract-${new Date().toISOString().slice(0,10)}.pdf`);
                         pdfLoading.style.display = 'none';
+                        isGeneratingPDF = false;
                         showToast('Contract PDF saved', 'success');
                     });
                 } catch (e) {
                     pdfLoading.style.display = 'none';
+                    isGeneratingPDF = false;
                     showToast('Failed to generate PDF. Please try again.', 'error');
                     console.error('PDF generation failed:', e);
                 }
@@ -3484,6 +3491,9 @@ For JazzCash/Easypaisa:
         
         // Generate invoice PDF
         function generateInvoicePDF() {
+            if (isGeneratingPDF) return;
+            isGeneratingPDF = true;
+            
             const pdfLoading = document.getElementById('pdf-loading');
             pdfLoading.style.display = 'flex';
             
@@ -3498,7 +3508,8 @@ For JazzCash/Easypaisa:
                     html2canvas(element, {
                         scale: 2,
                         useCORS: true,
-                        logging: false
+                        logging: false,
+                        backgroundColor: document.body.classList.contains('dark-mode') ? '#2D2A28' : '#F8F4E9'
                     }).then(canvas => {
                         const imgData = canvas.toDataURL('image/png');
                         const pdf = new jsPDF('p', 'mm', 'a4');
@@ -3512,10 +3523,12 @@ For JazzCash/Easypaisa:
                         
                         pdf.save(`vintagepak-invoice-${new Date().toISOString().slice(0,10)}.pdf`);
                         pdfLoading.style.display = 'none';
+                        isGeneratingPDF = false;
                         showToast('Invoice PDF saved', 'success');
                     });
                 } catch (e) {
                     pdfLoading.style.display = 'none';
+                    isGeneratingPDF = false;
                     showToast('Failed to generate PDF. Please try again.', 'error');
                     console.error('PDF generation failed:', e);
                 }
