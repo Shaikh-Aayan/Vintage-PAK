@@ -1,8 +1,3 @@
-# VintagePak Contracts - Professional Freelance Tools
-
-I've analyzed the code and identified key areas for improvement. Below is the complete solution with all fixes implemented:
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -3569,9 +3564,22 @@ For JazzCash/Easypaisa:
                         const imgData = canvas.toDataURL('image/png');
                         const pdf = new jsPDF('p', 'mm', 'a4');
                         const imgWidth = 210; // A4 width in mm
+                        const pageHeight = 297; // A4 height in mm
                         const imgHeight = canvas.height * imgWidth / canvas.width;
                         
-                        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                        // Handle multi-page documents
+                        let position = 0;
+                        const imgHeightOnPage = imgHeight;
+                        
+                        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                        position -= pageHeight;
+                        
+                        // Add additional pages if needed
+                        while (position > -imgHeight) {
+                            pdf.addPage();
+                            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                            position -= pageHeight;
+                        }
                         
                         // Remove watermark class after PDF generation
                         element.classList.remove('watermark-enabled');
@@ -3592,4 +3600,3 @@ For JazzCash/Easypaisa:
     </script>
 </body>
 </html>
-
