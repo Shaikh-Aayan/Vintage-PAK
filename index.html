@@ -1,3 +1,8 @@
+# VintagePak Contracts - Professional Freelance Tools
+
+I've analyzed the code and identified key areas for improvement. Below is the complete solution with all fixes implemented:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2323,8 +2328,30 @@ For JazzCash/Easypaisa:
 
     <script>
         // App version for localStorage
-        const APP_VERSION = "2.0";
+        const APP_VERSION = "2.1";
         let isGeneratingPDF = false;
+        let sortableInstance = null;
+        
+        // Escape HTML to prevent XSS
+        function escapeHTML(unsafe) {
+            if (!unsafe) return '';
+            return unsafe
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+        
+        // Set theme using classList
+        function setTheme(theme) {
+            const themes = ['classic', 'minimal', 'corporate', 'startup'];
+            themes.forEach(t => {
+                document.documentElement.classList.remove(`${t}-theme`);
+            });
+            document.documentElement.classList.add(`${theme}-theme`);
+            document.documentElement.style.setProperty('--theme-name', theme);
+        }
         
         // Navigation and Section Switching
         document.addEventListener('DOMContentLoaded', function() {
@@ -2342,7 +2369,7 @@ For JazzCash/Easypaisa:
             // Initialize Sortable for invoice items
             const invoiceItems = document.getElementById('invoice-items');
             if (invoiceItems) {
-                new Sortable(invoiceItems, {
+                sortableInstance = new Sortable(invoiceItems, {
                     handle: '.invoice-item-handle',
                     animation: 150,
                     ghostClass: 'sortable-ghost',
@@ -2615,11 +2642,15 @@ For JazzCash/Easypaisa:
             
             // Export/import JSON for contracts
             document.getElementById('export-contract-json').addEventListener('click', exportContractJSON);
-            document.getElementById('import-contract-json').addEventListener('click', importContractJSON);
+            document.getElementById('import-contract-json').addEventListener('click', function() {
+                document.getElementById('contract-import-file').click();
+            });
             
             // Export/import JSON for invoices
             document.getElementById('export-invoice-json').addEventListener('click', exportInvoiceJSON);
-            document.getElementById('import-invoice-json').addEventListener('click', importInvoiceJSON);
+            document.getElementById('import-invoice-json').addEventListener('click', function() {
+                document.getElementById('invoice-import-file').click();
+            });
             
             // JSON Drop Zones
             setupDropZone('contract-drop-zone', importContractJSON);
@@ -2642,8 +2673,7 @@ For JazzCash/Easypaisa:
                     
                     // Change theme
                     const theme = this.dataset.theme;
-                    document.documentElement.className = theme + '-theme';
-                    document.documentElement.style.setProperty('--theme-name', theme);
+                    setTheme(theme);
                 });
             });
             
@@ -2685,6 +2715,31 @@ For JazzCash/Easypaisa:
                     updateCharCount(id);
                 }
             });
+            
+            // Add hidden file inputs for JSON import
+            const contractImportInput = document.createElement('input');
+            contractImportInput.type = 'file';
+            contractImportInput.id = 'contract-import-file';
+            contractImportInput.accept = '.json';
+            contractImportInput.style.display = 'none';
+            contractImportInput.addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    importContractJSON(e.target.files[0]);
+                }
+            });
+            document.body.appendChild(contractImportInput);
+            
+            const invoiceImportInput = document.createElement('input');
+            invoiceImportInput.type = 'file';
+            invoiceImportInput.id = 'invoice-import-file';
+            invoiceImportInput.accept = '.json';
+            invoiceImportInput.style.display = 'none';
+            invoiceImportInput.addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    importInvoiceJSON(e.target.files[0]);
+                }
+            });
+            document.body.appendChild(invoiceImportInput);
         });
         
         // Show auto-save toast
@@ -2843,8 +2898,7 @@ For JazzCash/Easypaisa:
                     document.querySelectorAll('.toastify-content .template-option').forEach(option => {
                         option.addEventListener('click', function() {
                             const theme = this.dataset.theme;
-                            document.documentElement.className = theme + '-theme';
-                            document.documentElement.style.setProperty('--theme-name', theme);
+                            setTheme(theme);
                             Toastify.closeAll();
                         });
                     });
@@ -3003,7 +3057,7 @@ For JazzCash/Easypaisa:
                 
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${description}</td>
+                    <td>${escapeHTML(description)}</td>
                     <td>${quantity}</td>
                     <td>${formatCurrency(rate)}</td>
                     <td>${formatCurrency(total)}</td>
@@ -3177,7 +3231,7 @@ For JazzCash/Easypaisa:
                 <button class="remove-item"><i class="fas fa-times"></i></button>
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea class="item-desc" placeholder="Item description...">${itemData ? itemData.description : 'Service'}</textarea>
+                    <textarea class="item-desc" placeholder="Item description...">${itemData ? escapeHTML(itemData.description) : 'Service'}</textarea>
                 </div>
                 <div class="input-row">
                     <div class="form-group">
@@ -3196,18 +3250,6 @@ For JazzCash/Easypaisa:
             newItem.querySelectorAll('input, textarea').forEach(input => {
                 input.addEventListener('input', updateInvoicePreview);
             });
-            
-            // Reinitialize Sortable
-            if (window.Sortable) {
-                new Sortable(itemsContainer, {
-                    handle: '.invoice-item-handle',
-                    animation: 150,
-                    ghostClass: 'sortable-ghost',
-                    onEnd: function() {
-                        updateInvoicePreview();
-                    }
-                });
-            }
             
             updateInvoicePreview();
         }
@@ -3451,9 +3493,22 @@ For JazzCash/Easypaisa:
                         const imgData = canvas.toDataURL('image/png');
                         const pdf = new jsPDF('p', 'mm', 'a4');
                         const imgWidth = 210; // A4 width in mm
+                        const pageHeight = 297; // A4 height in mm
                         const imgHeight = canvas.height * imgWidth / canvas.width;
                         
-                        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                        // Handle multi-page documents
+                        let position = 0;
+                        const imgHeightOnPage = imgHeight;
+                        
+                        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                        position -= pageHeight;
+                        
+                        // Add additional pages if needed
+                        while (position > -imgHeight) {
+                            pdf.addPage();
+                            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                            position -= pageHeight;
+                        }
                         
                         // Remove watermark class after PDF generation
                         element.classList.remove('watermark-enabled');
@@ -3537,3 +3592,4 @@ For JazzCash/Easypaisa:
     </script>
 </body>
 </html>
+
